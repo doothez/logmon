@@ -4,7 +4,8 @@
     export GOROOT=/usr/lib/go/bin               // it depends on your OS system go installation & your choice
     export GOPATH=~/Code/golang                 // your go work space directory
     export GOBIN=$GOPATH/bin
-    go env -w GO111MODULE=on
+    go env -w GO111MODULE=auto
+    export PATH=$PATH:$GOROOT/bin
 
 
     Recoomend to clone this repo on $GOPATH/src/
