@@ -10,6 +10,7 @@ import (
 	"net"
 	"os"
 	"os/signal"
+	"runtime"
 	"syscall"
 
 	"github.com/takama/daemon"
@@ -126,7 +127,14 @@ func init() {
 }
 
 func main() {
-	srv, err := daemon.New(name, description, daemon.SystemDaemon, dependencies...)
+	var kind daemon.Kind
+	switch runtime.GOOS {
+	case "darwin":
+		kind = daemon.GlobalAgent
+	default:
+		kind = daemon.SystemDaemon
+	}
+	srv, err := daemon.New(name, description, kind, dependencies...)
 	if err != nil {
 		errlog.Println("Error: ", err)
 		os.Exit(1)
